@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping(value = "/reviews")
 public class ReviewsController {
 
+    // Services wired instead of repositories in order to separate concerns by having the service access data instead of the controller
     private ProductsService productsService;
     private ReviewsService reviewsService;
 
