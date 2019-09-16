@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class ReviewsController {
      */
     @RequestMapping(value = "/products/{productId}", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> createReviewForProduct(@PathVariable("productId") Long productId, @RequestBody Review review) {
+    public ResponseEntity<?> createReviewForProduct(@PathVariable("productId") Long productId, @Valid @RequestBody Review review) {
         Product product = productsService.findById(productId);
         Review savedReview = reviewsService.createReviewForProduct(product, review);
         productsService.updateProductRating(productId);

@@ -2,13 +2,9 @@ package com.udacity.course3.reviews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,17 +16,18 @@ public class Review {
     private Long id;
 
     @Size(max = 2000)
+    @NotBlank(message = "Please provide review 'content'")
     private String content;
 
     @DecimalMin("0.0")
     @DecimalMax("10.0")
+    @NotNull(message = "Please provide a 'rating' between '0.0' and '10.0' inclusive")
     private Double rating;
 
     @Column(name = "product_id", updatable=false, insertable=false)
     @JsonProperty("product_id")
     private Long productId;
 
-    @CreatedDate
     @JsonProperty("created_date")
     private Date createdDate;
 

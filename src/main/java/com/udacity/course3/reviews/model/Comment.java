@@ -2,9 +2,9 @@ package com.udacity.course3.reviews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -16,13 +16,13 @@ public class Comment {
     private Long id;
 
     @Size(max = 2000)
+    @NotBlank(message = "Please provide comment 'content'")
     private String content;
 
     @Column(name = "review_id", updatable=false, insertable=false)
     @JsonProperty("review_id")
     private Long reviewId;
 
-    @CreatedDate
     @JsonProperty("created_date")
     private Date createdDate;
 

@@ -4,7 +4,7 @@ create table IF NOT EXISTS product (
     name varchar(200) not null,
     description varchar(1000) not null,
     price DOUBLE not null default 0.0,
-    average_rating DOUBLE PRECISION(4, 2) not null default 0.0,
+    average_rating DOUBLE PRECISION(4, 2) default 0.0,
     created_date datetime not null
 );
 

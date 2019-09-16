@@ -24,8 +24,11 @@ public class CommentsService {
      * 4. If found, save comment.
      *
      * @param comment The comment to save.
+     * @param review The review that the comment is created for
      */
-    public Comment createCommentForReview(Comment comment) {
+    public Comment createCommentForReview(Comment comment, Review review) {
+        comment.setReview(review);
+        comment.setReviewId(review.getId());
         return commentsService.save(comment);
     }
 

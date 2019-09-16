@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,10 +33,9 @@ public class CommentsController {
      * @param reviewId The id of the review.
      */
     @RequestMapping(value = "/reviews/{reviewId}", method = RequestMethod.POST)
-    public ResponseEntity<?> createCommentForReview(@PathVariable("reviewId") Long reviewId, @RequestBody Comment comment) {
+    public ResponseEntity<?> createCommentForReview(@PathVariable("reviewId") Long reviewId, @Valid @RequestBody Comment comment) {
         Review review = reviewsService.findById(reviewId);
-        comment.setReview(review);
-        Comment savedComment = commentsService.createCommentForReview(comment);
+        Comment savedComment = commentsService.createCommentForReview(comment, review);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
 

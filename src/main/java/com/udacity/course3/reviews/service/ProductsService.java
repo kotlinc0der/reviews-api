@@ -6,6 +6,7 @@ import com.udacity.course3.reviews.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,8 @@ public class ProductsService {
      * 2. Save product.
      */
     public void createProduct(Product product) {
+        Date createdDate = product.getCreatedDate();
+        product.setCreatedDate(createdDate != null ? createdDate : new Date());
         productsRepository.save(product);
     }
 
@@ -47,7 +50,7 @@ public class ProductsService {
      * @return The list of products.
      */
     public List<Product> listProducts() {
-        return (List<Product>) productsRepository.findAll();
+        return productsRepository.findAll();
     }
 
     /**

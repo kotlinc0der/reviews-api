@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,9 @@ public class ReviewsService {
      */
     public Review createReviewForProduct(Product product, Review review) {
         review.setProduct(product);
+        review.setProductId(product.getId());
         review.setComments(review.getComments());
+        review.setCreatedDate(review.getCreatedDate() != null ? review.getCreatedDate() : new Date());
         review.setRating(formatRating(review.getRating()));
         Review savedReview = reviewsRepository.save(review);
         savedReview.getComments().forEach(comment -> comment.setReviewId(savedReview.getId()));
