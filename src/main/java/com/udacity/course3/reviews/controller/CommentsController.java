@@ -33,7 +33,8 @@ public class CommentsController {
      */
     @RequestMapping(value = "/reviews/{reviewId}", method = RequestMethod.POST)
     public ResponseEntity<?> createCommentForReview(@PathVariable("reviewId") Long reviewId, @RequestBody Comment comment) {
-        assert reviewsService.findById(reviewId) != null;
+        Review review = reviewsService.findById(reviewId);
+        comment.setReview(review);
         Comment savedComment = commentsService.createCommentForReview(comment);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }

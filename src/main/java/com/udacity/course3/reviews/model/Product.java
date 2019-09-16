@@ -1,14 +1,14 @@
 package com.udacity.course3.reviews.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 public class Product {
@@ -22,10 +22,16 @@ public class Product {
     @Size(max = 1000)
     private String description;
 
+    private BigDecimal price;
+
     @DecimalMin("0.0")
     @DecimalMax("10.0")
     @JsonProperty("average_rating")
     private Double averageRating;
+
+    @CreatedDate
+    @JsonProperty("created_date")
+    private Date createdDate;
 
     public Product() {
     }
@@ -64,5 +70,21 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

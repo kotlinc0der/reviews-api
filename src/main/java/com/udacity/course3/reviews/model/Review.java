@@ -2,12 +2,15 @@ package com.udacity.course3.reviews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +29,10 @@ public class Review {
     @Column(name = "product_id", updatable=false, insertable=false)
     @JsonProperty("product_id")
     private Long productId;
+
+    @CreatedDate
+    @JsonProperty("created_date")
+    private Date createdDate;
 
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
@@ -84,5 +91,13 @@ public class Review {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }
