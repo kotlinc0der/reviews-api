@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.udacity.course3</groupId>
-	<artifactId>reviews</artifactId>
+	<artifactId>reviews-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>reviews</name>
 	<description>Midterm Project for Data Stores and Persistence</description>
