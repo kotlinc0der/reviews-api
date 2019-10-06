@@ -1,8 +1,8 @@
 package com.udacity.course3.reviews;
 
-import com.udacity.course3.reviews.model.Comment;
-import com.udacity.course3.reviews.model.Product;
-import com.udacity.course3.reviews.model.Review;
+import com.udacity.course3.reviews.model.entity.Comment;
+import com.udacity.course3.reviews.model.entity.Product;
+import com.udacity.course3.reviews.model.entity.Review;
 import com.udacity.course3.reviews.repository.CommentsRepository;
 import com.udacity.course3.reviews.repository.ProductsRepository;
 import com.udacity.course3.reviews.repository.ReviewsRepository;
@@ -80,7 +80,7 @@ public class ReviewsApplicationTests {
 		assertThat(review.getContent()).isEqualTo(TEST_REVIEW);
 		assertThat(review.getProductId()).isEqualTo(1L);
 		assertThat(review.getRating()).isEqualTo(RATING);
-		assertThat(review.getComments()).hasSize(2);;
+		assertThat(review.getComments()).hasSize(2);
 	}
 
 	@Test
@@ -97,14 +97,14 @@ public class ReviewsApplicationTests {
 		assertThat(review.getContent()).isEqualTo(TEST_REVIEW);
 		assertThat(review.getProductId()).isEqualTo(1L);
 		assertThat(review.getRating()).isEqualTo(RATING);
-		assertThat(review.getComments()).hasSize(1);;
+		assertThat(review.getComments()).hasSize(1);
 	}
 
 	@Test
 	public void whenFindCommentById_thenReturnComment() {
 		Comment comment = commentsRepository.findById(1L).get();
 		assertThat(comment.getContent()).isEqualTo(TEST_COMMENT);
-		assertThat(comment.getReviewId()).isEqualTo(1L);;
+		assertThat(comment.getReviewId()).isEqualTo(1L);
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class ReviewsApplicationTests {
 		Comment comment = commentsRepository.save(getComment(review));
 		assertThat(comment.getId()).isEqualTo(3L);
 		assertThat(comment.getContent()).isEqualTo(TEST_COMMENT);
-		assertThat(comment.getReviewId()).isEqualTo(1L);;
+		assertThat(comment.getReviewId()).isEqualTo(1L);
 	}
 
 
