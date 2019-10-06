@@ -1,12 +1,12 @@
 # Reviews API 
-Supports operations for writing reviews and listing reviews for a product but with no sorting or filtering.
+Supports operations for writing reviews and listing reviews for a product.
 
 ### Prerequisites
-MySQL needs to be installed and configured. Instructions provided separately.
+MySQL and MongoDB need to be installed and configured. Instructions provided separately.
 
 ### Instructions
-* Configure the MySQL Datasource in application.properties.
-    
+* Configure the MySQL & MongoDB Datasource in application.properties.
+* You have to use basic authentication to access the rest api. (admin user configured)    
 * To run this service you execute:
     
     ```
