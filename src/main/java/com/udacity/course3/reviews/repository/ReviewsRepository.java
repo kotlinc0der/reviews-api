@@ -1,7 +1,7 @@
 package com.udacity.course3.reviews.repository;
 
-import com.udacity.course3.reviews.model.Product;
-import com.udacity.course3.reviews.model.Review;
+import com.udacity.course3.reviews.model.entity.Product;
+import com.udacity.course3.reviews.model.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,11 @@
 package com.udacity.course3.reviews.service;
 
-import com.udacity.course3.reviews.model.Comment;
-import com.udacity.course3.reviews.model.Review;
+import com.udacity.course3.reviews.model.document.CommentDoc;
+import com.udacity.course3.reviews.model.document.ReviewDoc;
+import com.udacity.course3.reviews.model.entity.Comment;
+import com.udacity.course3.reviews.model.entity.Review;
 import com.udacity.course3.reviews.repository.CommentsRepository;
+import com.udacity.course3.reviews.repository.ReviewsMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,8 @@ import java.util.List;
  */
 @Service
 public class CommentsService {
-    private CommentsRepository commentsService;
+    private CommentsRepository commentsRepository;
+    private ReviewsMongoRepository reviewsMongoRepository;
 
     /**
      * Creates a comment for a review.
@@ -29,7 +33,11 @@ public class CommentsService {
     public Comment createCommentForReview(Comment comment, Review review) {
         comment.setReview(review);
         comment.setReviewId(review.getId());
-        return commentsService.save(comment);
+        Comment savedCommentEntity = commentsRepository.save(comment);
+        ReviewDoc reviewDoc = reviewsMongoRepository.findReviewDocByReviewEntityId(review.getId());
+        reviewDoc.addComment(CommentDoc.fromComment(comment));
+        reviewsMongoRepository.save(reviewDoc);
+        return savedCommentEntity;
     }
 
     /**
@@ -46,7 +54,12 @@ public class CommentsService {
     }
 
     @Autowired
-    public void setCommentsService(CommentsRepository commentsService) {
-        this.commentsService = commentsService;
+    public void setCommentsRepository(CommentsRepository commentsRepository) {
+        this.commentsRepository = commentsRepository;
+    }
+
+    @Autowired
+    public void setReviewsMongoRepository(ReviewsMongoRepository reviewsMongoRepository) {
+        this.reviewsMongoRepository = reviewsMongoRepository;
     }
 }

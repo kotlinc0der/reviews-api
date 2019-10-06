@@ -1,7 +1,8 @@
 package com.udacity.course3.reviews.controller;
 
-import com.udacity.course3.reviews.model.Product;
-import com.udacity.course3.reviews.model.Review;
+import com.udacity.course3.reviews.model.document.ReviewDoc;
+import com.udacity.course3.reviews.model.entity.Product;
+import com.udacity.course3.reviews.model.entity.Review;
 import com.udacity.course3.reviews.service.ProductsService;
 import com.udacity.course3.reviews.service.ReviewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class ReviewsController {
     @RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
     public ResponseEntity<List<?>> listReviewsForProduct(@PathVariable("productId") Long productId) {
         Product product = productsService.findById(productId);
-        List<Review> reviews = reviewsService.listReviewsForProduct(product);
+        List<ReviewDoc> reviews = reviewsService.listReviewsForProduct(product);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 

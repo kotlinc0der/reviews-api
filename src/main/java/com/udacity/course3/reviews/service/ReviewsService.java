@@ -1,8 +1,10 @@
 package com.udacity.course3.reviews.service;
 
 import com.udacity.course3.reviews.exception.ReviewNotFoundException;
-import com.udacity.course3.reviews.model.Product;
-import com.udacity.course3.reviews.model.Review;
+import com.udacity.course3.reviews.model.document.ReviewDoc;
+import com.udacity.course3.reviews.model.entity.Product;
+import com.udacity.course3.reviews.model.entity.Review;
+import com.udacity.course3.reviews.repository.ReviewsMongoRepository;
 import com.udacity.course3.reviews.repository.ReviewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service for working with review entity.
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class ReviewsService {
 
     private ReviewsRepository reviewsRepository;
+    private ReviewsMongoRepository reviewsMongoRepository;
 
     /**
      * Creates a review for a product.
@@ -41,6 +45,7 @@ public class ReviewsService {
         review.setRating(formatRating(review.getRating()));
         Review savedReview = reviewsRepository.save(review);
         savedReview.getComments().forEach(comment -> comment.setReviewId(savedReview.getId()));
+        reviewsMongoRepository.save(ReviewDoc.fromReview(review));
         return savedReview;
     }
 
@@ -50,9 +55,12 @@ public class ReviewsService {
      * @param product The product.
      * @return The list of reviews.
      */
-    public List<Review> listReviewsForProduct(Product product) {
-        Optional<List<Review>> reviews = reviewsRepository.findAllByProduct(product);
-        return reviews.orElse(new ArrayList<>());
+    public List<ReviewDoc> listReviewsForProduct(Product product) {
+        Optional<List<Review>> reviewOptionals = reviewsRepository.findAllByProduct(product);
+        List<Review> reviews = reviewOptionals.orElse(new ArrayList<>());
+        List<Long> reviewIds = reviews.stream().map(Review::getId).collect(Collectors.toList());
+        Optional<List<ReviewDoc>> reviewDocs = reviewsMongoRepository.findReviewDocsByReviewEntityIdIn(reviewIds);
+        return reviewDocs.orElse(new ArrayList<>());
     }
 
     /**
@@ -80,5 +88,10 @@ public class ReviewsService {
     @Autowired
     public void setReviewsRepository(ReviewsRepository reviewsRepository) {
         this.reviewsRepository = reviewsRepository;
+    }
+
+    @Autowired
+    public void setReviewsMongoRepository(ReviewsMongoRepository reviewsMongoRepository) {
+        this.reviewsMongoRepository = reviewsMongoRepository;
     }
 }

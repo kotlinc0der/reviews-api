@@ -1,7 +1,7 @@
 package com.udacity.course3.reviews.service;
 
 import com.udacity.course3.reviews.exception.ProductNotFoundException;
-import com.udacity.course3.reviews.model.Product;
+import com.udacity.course3.reviews.model.entity.Product;
 import com.udacity.course3.reviews.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

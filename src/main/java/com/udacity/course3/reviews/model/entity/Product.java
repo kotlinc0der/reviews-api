@@ -1,4 +1,4 @@
-package com.udacity.course3.reviews.model;
+package com.udacity.course3.reviews.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
