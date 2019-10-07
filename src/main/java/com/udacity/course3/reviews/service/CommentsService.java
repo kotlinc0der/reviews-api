@@ -8,6 +8,7 @@ import com.udacity.course3.reviews.repository.CommentsRepository;
 import com.udacity.course3.reviews.repository.ReviewsMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class CommentsService {
      * @param comment The comment to save.
      * @param review The review that the comment is created for
      */
+    @Transactional
     public Comment createCommentForReview(Comment comment, Review review) {
         comment.setReview(review);
         comment.setReviewId(review.getId());
